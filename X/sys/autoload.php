@@ -1,5 +1,6 @@
 <?php
-namespace Name\Sys;
+
+namespace X\Sys;
 
 class Autoload{
 
@@ -49,7 +50,8 @@ class Autoload{
 
             // the rest is the relative class name
             $relative_class = substr($class, $pos + 1);
-
+            $relative_class=strtolower($relative_class);
+            
             // try to load a mapped file for the prefix and relative class
             $mapped_file = $this->loadMappedFile($prefix, $relative_class);
             if ($mapped_file) {

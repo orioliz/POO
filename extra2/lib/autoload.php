@@ -1,5 +1,5 @@
 <?php
-namespace Name\Sys;
+namespace page;
 
 class Autoload{
 

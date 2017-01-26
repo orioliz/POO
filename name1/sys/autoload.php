@@ -1,18 +1,38 @@
 <?php
-namespace Name\Sys;
 
-class Autoload{
+namespace Name\sys;
 
-    
+class Autoload
+{
+    /**
+     * An associative array where the key is a namespace prefix and the value
+     * is an array of base directories for classes in that namespace.
+     *
+     * @var array
+     */
     protected $prefixes = array();
 
-    
+    /**
+     * Register loader with SPL autoloader stack.
+     *
+     * @return void
+     */
     public function register()
     {
         spl_autoload_register(array($this, 'loadClass'));
     }
 
-   
+    /**
+     * Adds a base directory for a namespace prefix.
+     *
+     * @param string $prefix The namespace prefix.
+     * @param string $base_dir A base directory for class files in the
+     * namespace.
+     * @param bool $prepend If true, prepend the base directory to the stack
+     * instead of appending it; this causes it to be searched first rather
+     * than last.
+     * @return void
+     */
     public function addNamespace($prefix, $base_dir, $prepend = false)
     {
         // normalize namespace prefix
@@ -34,7 +54,13 @@ class Autoload{
         }
     }
 
-    
+    /**
+     * Loads the class file for a given class name.
+     *
+     * @param string $class The fully-qualified class name.
+     * @return mixed The mapped file name on success, or boolean false on
+     * failure.
+     */
     public function loadClass($class)
     {
         // the current namespace prefix
@@ -65,7 +91,14 @@ class Autoload{
         return false;
     }
 
-    
+    /**
+     * Load the mapped file for a namespace prefix and relative class.
+     *
+     * @param string $prefix The namespace prefix.
+     * @param string $relative_class The relative class name.
+     * @return mixed Boolean false if no mapped file can be loaded, or the
+     * name of the mapped file that was loaded.
+     */
     protected function loadMappedFile($prefix, $relative_class)
     {
         // are there any base directories for this namespace prefix?
@@ -94,7 +127,12 @@ class Autoload{
         return false;
     }
 
-    
+    /**
+     * If a file exists, require it from the file system.
+     *
+     * @param string $file The file to require.
+     * @return bool True if the file exists, false if not.
+     */
     protected function requireFile($file)
     {
         if (file_exists($file)) {
