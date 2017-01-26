@@ -18,6 +18,7 @@
 
 			}
 			var_dump($dbconf);
+			die;
 			
 		}
 	}
